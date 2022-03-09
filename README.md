@@ -51,7 +51,7 @@ Add this to your `nautobot_config.py` to prepare your Nautobot settings for Dolt
 DATABASES["global"] = DATABASES["default"]
 
 # Dolt requires a custom database router to generate the before & after queries for generating diffs.
-DATABASE_ROUTERS = ["dolt.routers.GlobalStateRouter"]
+DATABASE_ROUTERS = ["nautobot_version_control.routers.GlobalStateRouter"]
 
 # Because Dolt creates branches of the database, the default database sessions cannot be used. We 
 # must tell Nautobot to use Redis for sessions instead. This adds a distinct cache configuration for
