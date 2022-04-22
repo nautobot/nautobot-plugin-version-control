@@ -1,8 +1,14 @@
 ---
 name: "CI"
 on:  # yamllint disable
-  - "push"
-  - "pull_request"
+  pull_request:  # yamllint disable-line rule:empty-values
+  push:  # yamllint disable-line rule:empty-values
+  workflow_dispatch:  # yamllint disable-line rule:empty-values
+    inputs:
+      dolt-version:
+        description: "Targeted Dolt Version"
+        required: true
+        default: "v0.35.5"
 
 env:
   PLUGIN_NAME: "nautobot-dolt"
@@ -103,6 +109,9 @@ jobs:
             PYTHON_VER=${{ matrix.python-version }}
       - name: "List images"
         run: "docker image ls"
+      - name: "Identify Dolt Version"
+        run: "echo ::set-output name=dolt_version::$( if [ -z \"${{ github.event.inputs.dolt-version }}\" ]; then echo \"v0.35.5\"; else echo \"${{ github.event.inputs.dolt-version }}\"; fi )"
+        id: "doltversion"
       - name: "Build"
         uses: "docker/build-push-action@v2"
         with:
@@ -114,6 +123,8 @@ jobs:
           file: "./development/Dockerfile-dolt"
           cache-from: "type=gha,scope=dolt"
           cache-to: "type=gha,scope=dolt"
+          build-args: |
+            DOLT_RELEASE=${{ steps.doltversion.outputs.dolt_version }}
       - name: "Display images"
         run: "docker image ls"
       - name: "Copy credentials"
@@ -156,6 +167,9 @@ jobs:
             PYTHON_VER=${{ matrix.python-version }}
       - name: "List images"
         run: "docker image ls"
+      - name: "Identify Dolt Version"
+        run: "echo ::set-output name=dolt_version::$( if [ -z \"${{ github.event.inputs.dolt-version }}\" ]; then echo \"v0.35.5\"; else echo \"${{ github.event.inputs.dolt-version }}\"; fi )"
+        id: "doltversion"
       - name: "Build"
         uses: "docker/build-push-action@v2"
         with:
@@ -167,6 +181,8 @@ jobs:
           file: "./development/Dockerfile-dolt"
           cache-from: "type=gha,scope=dolt"
           cache-to: "type=gha,scope=dolt"
+          build-args: |
+            DOLT_RELEASE=${{ steps.doltversion.outputs.dolt_version }}
       - name: "Display images"
         run: "docker image ls"
       - name: "Copy credentials"
