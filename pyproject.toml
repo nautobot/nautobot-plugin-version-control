@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-version-control"
-version = "1.0.0-alpha.0"
+version = "1.0.0-alpha.1"
 description = "Nautobot Version Control"
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -12,10 +12,10 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
 ]
 packages = [
     { include = "nautobot_version_control" },
@@ -25,8 +25,8 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
-nautobot = "~1.2.4"
+python = "^3.7"
+nautobot = "~1.3.2"
 # MySQL database adapter
 mysqlclient = "^2.0.3"
 
